@@ -5,6 +5,7 @@ import { exit } from "process";
 import { Command } from "commander";
 import { decode } from "iconv-lite";
 import { delimiter, join, normalize, parse } from "path";
+import fs from "fs";
 
 const unityOptions = ["-batchmode", "-quit"];
 const unityOptionsWithValue = ["-buildTarget", "-executeMethod", "-projectPath", "-CacheServerIPAddress"];
@@ -66,6 +67,7 @@ function watchLog() {
         });
         tail.watch();
     } else {
+        fs.appendFileSync(logFile, "");
         let tail = new TailUnix(logFile);
         tail.on("line", data => {
             console.log(data);
@@ -112,6 +114,7 @@ function runUnity() {
 }
 
 function main() {
+    console.log("start");
     runUnity();
     watchLog();
 }
