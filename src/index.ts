@@ -13,7 +13,7 @@ const encoding = process.platform == "win32" ? "GBK" : "utf8";
 
 let program = new Command();
 program.requiredOption("-u,--unity-path <path>", "Path to unity exe")
-    .option("-l,--log-file <path>", "Path to log file");
+    .option("-l,--log-file <path>", "Path to log file").allowUnknownOption(true);
 unityOptions.forEach(option => {
     program.option(option);
 });
@@ -31,13 +31,7 @@ let args: string[] = [];
 //收集Unity需要的参数
 for (let i = 0; i < process.argv.length; i++) {
     let arg = process.argv[i];
-    if (unityOptions.indexOf(arg) >= 0)
-        args.push(arg);
-    else if (unityOptionsWithValue.indexOf(arg) >= 0) {
-        args.push(arg, process.argv[i + 1]);
-        i++;
-    }
-
+    args.push(arg);
 }
 //替换logFile参数
 let logArgExist = false;
