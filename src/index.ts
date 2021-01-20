@@ -25,7 +25,7 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-let unityPath: string = options.unityPath;
+let unityPath: string = normalize(options.unityPath);
 let logFile: string = normalize(options.logFile ?? join(process.cwd(), "run.log"));
 let args: string[] = [];
 //收集Unity需要的参数
